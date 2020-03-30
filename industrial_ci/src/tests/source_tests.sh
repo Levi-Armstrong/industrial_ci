@@ -108,7 +108,9 @@ function run_source_tests {
 
     if [ "$CCACHE_DIR" ]; then
         ici_run "setup_ccache" ici_asroot apt-get install -qq -y ccache
-        export PATH="/usr/lib/ccache:$PATH"
+        UPSTREAM_CMAKE_ARGS="$UPSTREAM_CMAKE_ARGS -DCMAKE_CXX_COMPILER_LAUNCHER=ccache -DCMAKE_C_COMPILER_LAUNCHER=ccache"
+        TARGET_CMAKE_ARGS="$TARGET_CMAKE_ARGS -DCMAKE_CXX_COMPILER_LAUNCHER=ccache -DCMAKE_C_COMPILER_LAUNCHER=ccache"
+        DOWNSTREAM_CMAKE_ARGS="$DOWNSTREAM_CMAKE_ARGS -DCMAKE_CXX_COMPILER_LAUNCHER=ccache -DCMAKE_C_COMPILER_LAUNCHER=ccache"
     fi
 
     ici_run "${BUILDER}_setup" ici_quiet builder_setup
